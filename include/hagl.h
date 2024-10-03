@@ -56,26 +56,28 @@ SPDX-License-Identifier: MIT
 #include "hagl/blit.h"
 #include "hagl/char.h"
 
+#include <hardware/spi.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-#define ABS(x)  ((x) > 0 ? (x) : -(x))
+#define ABS(x) ((x) > 0 ? (x) : -(x))
 
 /* If you want to use bigger fonts than 6x9 you need to define this. */
 #ifndef HAGL_CHAR_BUFFER_SIZE
-#define HAGL_CHAR_BUFFER_SIZE    (6 * 9 * 2)
+#define HAGL_CHAR_BUFFER_SIZE (6 * 9 * 2)
 #endif
 
-#define HAGL_OK                  (0)
-#define HAGL_ERR_GENERAL         (1)
-#define HAGL_ERR_FILE_IO         (2)
+#define HAGL_OK (0)
+#define HAGL_ERR_GENERAL (1)
+#define HAGL_ERR_FILE_IO (2)
 
-hagl_backend_t *hagl_init(void);
-size_t hagl_flush(hagl_backend_t *backend);
-void hagl_close(hagl_backend_t *backend);
+void hagl_init(hagl_backend_t* backend, uint8_t scl, uint8_t sda, uint8_t dc, uint8_t cs, spi_inst_t* spi);
+size_t hagl_flush(hagl_backend_t* backend);
+void hagl_close(hagl_backend_t* backend);
 
-void hagl_clear(void *surface);
+void hagl_clear(void* surface);
 
 #ifdef __cplusplus
 }

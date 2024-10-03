@@ -64,15 +64,19 @@ hagl_clear(void *_surface)
     hagl_set_clip(surface, x0, y0, x1, y1);
 }
 
-hagl_backend_t *
-hagl_init(void)
+void
+hagl_init(hagl_backend_t* backend, uint8_t scl, uint8_t sda, uint8_t dc, uint8_t cs, spi_inst_t* spi)
 {
-    static hagl_backend_t backend;
-    memset(&backend, 0, sizeof(hagl_backend_t));
+    memset(backend, 0, sizeof(hagl_backend_t));
 
-    hagl_hal_init(&backend);
-    hagl_set_clip(&backend, 0, 0,  backend.width - 1,  backend.height - 1);
-    return &backend;
+    backend->scl = scl;
+    backend->sda = sda;
+    backend->dc = dc;
+    backend->cs = cs;
+    backend->spi = spi;
+
+    hagl_hal_init(backend);
+    hagl_set_clip(backend, 0, 0,  backend->width - 1,  backend->height - 1);
 };
 
 size_t

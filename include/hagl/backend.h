@@ -37,6 +37,8 @@ SPDX-License-Identifier: MIT
 
 #include <stddef.h>
 
+#include <hardware/spi.h>
+
 #include "hagl/bitmap.h"
 #include "hagl/window.h"
 #include "hagl/color.h"
@@ -64,6 +66,14 @@ typedef struct {
     void (*close)(void *self);
     uint8_t *buffer;
     uint8_t *buffer2;
+
+    int scl;
+    int sda;
+    int dc;
+    int cs;
+    spi_inst_t* spi;
+    uint16_t prev_x1, prev_x2, prev_y1, prev_y2;
+
 } hagl_backend_t;
 
 #ifdef __cplusplus
